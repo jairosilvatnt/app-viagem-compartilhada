@@ -25316,7 +25316,7 @@ var appReducer = (state, action) => {
 			...state,
 			currentUser: null
 		};
-		case "ADD_BOOKING":
+		case "ADD_BOOKING": {
 			const updatedTripsBooking = state.trips.map((t) => {
 				if (t.id === action.payload.tripId) return {
 					...t,
@@ -25329,6 +25329,7 @@ var appReducer = (state, action) => {
 				bookings: [action.payload, ...state.bookings],
 				trips: updatedTripsBooking
 			};
+		}
 		case "ADD_TRIP": return {
 			...state,
 			trips: [...state.trips, action.payload]
@@ -25371,7 +25372,7 @@ const AppProvider = ({ children }) => {
 			type: "ADD_BOOKING",
 			payload: {
 				...bookingData,
-				id: Math.random().toString(36).substr(2, 9),
+				id: Math.random().toString(36).substring(2, 9),
 				createdAt: (/* @__PURE__ */ new Date()).toISOString(),
 				status: "confirmed",
 				trip: state.trips.find((t) => t.id === bookingData.tripId)
@@ -25383,7 +25384,7 @@ const AppProvider = ({ children }) => {
 			type: "ADD_TRIP",
 			payload: {
 				...tripData,
-				id: Math.random().toString(36).substr(2, 9),
+				id: Math.random().toString(36).substring(2, 9),
 				currentPrice: tripData.basePrice,
 				availableSeats: tripData.totalSeats
 			}
@@ -32731,4 +32732,4 @@ var App = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AppProvider, { child
 var App_default = App;
 (0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(App_default, {}));
 
-//# sourceMappingURL=index-CYentj9E.js.map
+//# sourceMappingURL=index-BepIPlz7.js.map

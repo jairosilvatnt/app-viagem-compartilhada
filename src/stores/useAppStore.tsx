@@ -59,7 +59,7 @@ const MOCK_TRIPS: Trip[] = [
     carImage: 'https://img.usecurling.com/p/400/300?q=white%20sedan%20car',
     origin: 'Campinas',
     destination: 'São Paulo',
-    departureTime: new Date(new Date().setHours(8, 0)).toISOString(), // Tomorrow logic handled in component usually, but keeping simple
+    departureTime: new Date(new Date().setHours(8, 0)).toISOString(),
     arrivalTime: new Date(new Date().setHours(9, 30)).toISOString(),
     totalSeats: 4,
     availableSeats: 0,
@@ -83,7 +83,7 @@ type Action =
   | { type: 'LOGOUT' }
   | { type: 'ADD_BOOKING'; payload: Booking }
   | { type: 'ADD_TRIP'; payload: Trip }
-  | { type: 'UPDATE_TRIP'; payload: Trip } // Used for promos
+  | { type: 'UPDATE_TRIP'; payload: Trip }
   | { type: 'UPDATE_USER'; payload: Partial<User> }
 
 const initialState: AppState = {
@@ -111,7 +111,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
       return { ...state, currentUser: action.payload }
     case 'LOGOUT':
       return { ...state, currentUser: null }
-    case 'ADD_BOOKING':
+    case 'ADD_BOOKING': {
       // Update available seats on the trip
       const updatedTripsBooking = state.trips.map((t) => {
         if (t.id === action.payload.tripId) {
@@ -127,6 +127,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
         bookings: [action.payload, ...state.bookings],
         trips: updatedTripsBooking,
       }
+    }
     case 'ADD_TRIP':
       return { ...state, trips: [...state.trips, action.payload] }
     case 'UPDATE_TRIP':
@@ -183,7 +184,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     const newBooking: Booking = {
       ...bookingData,
-      id: Math.random().toString(36).substr(2, 9),
+      id: Math.random().toString(36).substring(2, 9),
       createdAt: new Date().toISOString(),
       status: 'confirmed',
       trip: state.trips.find((t) => t.id === bookingData.tripId),
@@ -196,7 +197,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     const newTrip: Trip = {
       ...tripData,
-      id: Math.random().toString(36).substr(2, 9),
+      id: Math.random().toString(36).substring(2, 9),
       currentPrice: tripData.basePrice,
       availableSeats: tripData.totalSeats,
     }
